@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gpt-huggingface
+  labels:
+    app: gpt-hf-pod
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: gpt-hf-pod
+  template:
+    metadata:
+      labels:
+        app: gpt-hf-pod
+    spec:
+      containers:
+        - name: gptcontainer
+          image: YOUR_DOCKERHUB_USERNAME/llmsecops-fastapi:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8000
+          resources:
+            requests:
+              cpu: "250m"
+              memory: "512Mi"
+            limits:
+              cpu: "500m"
+              memory: "1Gi"
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8000
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8000
+            initialDelaySeconds: 30
+            periodSeconds: 30
