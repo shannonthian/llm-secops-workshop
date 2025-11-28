@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: gptcontainer
-          image: YOUR_DOCKERHUB_USERNAME/llmsecops-fastapi:latest
+          image: shannontsc/llmsecops-fastapi:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 8000
